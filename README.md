@@ -5,7 +5,7 @@ Ce projet est un MVP d'un catalogue interactif de véhicules électrifiés (voit
 
 ## 📦 Stack technique
 - **Next.js 15** (App Router)
-- **React 18** (Server Components + Client Components)
+- **React 19** (Server Components + Client Components)
 - **TypeScript**
 - **TailwindCSS**
 - **Shadcn UI**
