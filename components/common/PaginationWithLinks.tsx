@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import Spinner from "@/components/common/Spinner"; 
+import Spinner from "@/components/common/Spinner";
 
 export interface PaginationWithLinksProps {
   pageSizeSelectOptions?: {
@@ -223,7 +223,7 @@ function SelectRowsPerPage({
   return (
     <div className="flex items-center gap-4">
       <label htmlFor="page-size-select" className="w-max text-sm font-medium">
-        Taille de page
+        Éléments par page
       </label>
 
       <Select
