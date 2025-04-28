@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚗 Saabre - Test Frontend Developer
 
-## Getting Started
+Bienvenue sur mon projet de test technique pour Saabre.
+Ce projet est un MVP d'un catalogue interactif de véhicules électrifiés (voitures électriques, hybrides...).
 
-First, run the development server:
+## 📦 Stack technique
+- **Next.js 15** (App Router)
+- **React 18** (Server Components + Client Components)
+- **TypeScript**
+- **TailwindCSS**
+- **Shadcn UI**
+- **ESLint** et **Prettier**
+- **Vercel** pour le déploiement
 
+## ✨ Fonctionnalités réalisées
+
+- Affichage d'une liste paginée des véhicules
+- Système de pagination dynamique avec `page` et `pageSize`
+- Page de détail pour chaque véhicule (`/cars/[carId]`)
+- Gestion des erreurs (`error.tsx`) et chargements (`loading.tsx`)
+- Architecture modulaire : **features-based**
+- Respect des bonnes pratiques SEO (meta tags, OpenGraph, titres dynamiques)
+- Accessibilité améliorée : balises HTML sémantiques, aria-labels, alt-texts
+- UX fluide : Skeletons de chargement, spinners, scroll-to-top automatique
+- Déploiement sur Vercel
+
+## 🚀 Lancer le projet en local
+
+1. Cloner le repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/mamadykonte/saabre-test
+cd saabre-test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installer les dépendances
+```bash
+npm install
+```
+ou
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Ajouter un fichier `.env.local`
+```bash
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Démarrer le projet
+```bash
+npm run dev
+```
 
-## Learn More
+## 👨‍💻 Structure du projet
 
-To learn more about Next.js, take a look at the following resources:
+```
+├── app/ (routing Next.js)
+├── features/ (logique métier des voitures)
+├── components/ui/ (UI génériques : boutons, select...)
+├── components/common/ (Pagination, Spinner, etc.)
+├── lib/ (utils et hooks)
+├── public/ (images statiques)
+├── shared/ (formatters, constantes)
+├── tsconfig.json, eslint.config.mjs (configurations)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📘 Sources utilisées
+- [Next.js 15 documentation](https://nextjs.org/docs)
+- [TailwindCSS documentation](https://tailwindcss.com/docs)
+- [Shadcn UI documentation](https://ui.shadcn.dev/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 Respect des consignes Saabre
 
-## Deploy on Vercel
+- HTML optimisé et accessibilité
+- Responsive design adapté à tous les écrans
+- Code clair, composantisé et réutilisable
+- Bonne performance et expérience utilisateur
+- Projet scalable, facilement évolutif et mantenable
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Merci beaucoup pour votre attention et votre évaluation ! 🚀
