@@ -11,7 +11,7 @@ const CarDetailSpecs = ({ car }: CarDetailSpecsProps) => {
   const specs = getCarSpecs(car);
   return (
     <section className="text-base text-gray-700 flex-1">
-      <h2 className="text-lg font-semibold mb-4">Spécifications techniques</h2>
+      <h2 className="text-xl font-semibold mb-4">Spécifications techniques</h2>
       <CarDetailList specs={specs} />
     </section>
   );

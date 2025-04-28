@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 const BackLink = () => {
   const router = useRouter();
 
-  const handleBack = () => router.back();
+  const handleBack = () =>
+    window.history.length > 2 ? router.back() : router.push("/");
 
   return (
     <Button

@@ -16,7 +16,7 @@ const CarImageWithPricing = ({ car }: CarImageWithPricingProps) => {
 
   return (
     <section>
-      <figure className="aspect-square overflow-hidden rounded-lg">
+      <figure className="aspect-8/7 overflow-hidden rounded-lg">
         <Image
           src="/default-car.jpg"
           alt={`Voiture ${car.brand} ${car.model}`}
@@ -40,7 +40,7 @@ const CarImageWithPricing = ({ car }: CarImageWithPricingProps) => {
             </p>
             <p
               className={`text-sm font-medium ${
-                isPriceIncreased ? "text-red-600" : "text-green-600"
+                isPriceIncreased ? "text-red-700" : "text-green-700"
               }`}
             >
               {isPriceIncreased ? "+" : ""}

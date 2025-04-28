@@ -1,7 +1,5 @@
-import React from "react";
-
 import { Review } from "../../types/car";
-import { formatDate } from "@/shared/formatters";
+import { formatElapsedTime } from "@/shared/formatters/formatElapsedTime";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -41,7 +39,7 @@ const CarReviewInfo = ({ review }: CarReviewInfoProps) => {
                 </div>
               </div>
               <time className="text-sm text-gray-500">
-                {formatDate(review.reviewDate)}
+                {formatElapsedTime(review.reviewDate)}
               </time>
             </div>
             <p className="text-gray-600">{review.text}</p>
