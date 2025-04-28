@@ -50,7 +50,7 @@ export default async function CarDetailPage({ params }: Props) {
   if (car.id === null) return notFound();
 
   return (
-    <main className="custom-container py-6 max-w-5xl mx-auto">
+    <main className="custom-container max-w-5xl mx-auto">
       <BackLink />
       <div className="flex flex-col gap-12">
         <Card className="p-8">
