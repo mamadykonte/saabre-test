@@ -10,7 +10,7 @@ const CarCardImage = ({ car }: CarCardImageProps) => {
   return (
     <figure className="relative w-full h-56 md:w-52 md:h-32 overflow-hidden rounded-md bg-gray-100">
       <Image
-        src={`https://picsum.photos/sened/${car.id}/200/300.webp?random=${car.id}`}
+        src={`https://picsum.photos/seed/${car.id}/200/300.webp?random=${car.id}`}
         alt={`Voiture ${car.brand} ${car.model}`}
         fill
         className="object-cover"
