@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 import { X } from "lucide-react";
+import { CARS_SEARCH_PARAMS } from "@/shared/constants";
+
 import { Button } from "../ui/button";
 
 export default function SearchBar() {
@@ -12,20 +14,13 @@ export default function SearchBar() {
   const pathname = usePathname();
 
   const [searchTerm, setSearchTerm] = useState(
-    searchParams.get("search") || ""
+    searchParams.get(CARS_SEARCH_PARAMS.search) || ""
   );
 
+  // Quand les searchParams changent (ex: reset), on met à jour l'input
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (searchTerm.trim() === "") {
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete("search");
-        router.replace(`${pathname}?${params.toString()}`);
-      }
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchTerm, searchParams, pathname, router]);
+    setSearchTerm(searchParams.get(CARS_SEARCH_PARAMS.search) || "");
+  }, [searchParams]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,9 +28,9 @@ export default function SearchBar() {
     const params = new URLSearchParams(searchParams.toString());
 
     if (searchTerm.trim()) {
-      params.set("search", searchTerm.trim());
+      params.set(CARS_SEARCH_PARAMS.search, searchTerm.trim());
     } else {
-      params.delete("search");
+      params.delete(CARS_SEARCH_PARAMS.search);
     }
 
     router.replace(`${pathname}?${params.toString()}`);
@@ -43,10 +38,16 @@ export default function SearchBar() {
 
   const clearSearch = () => {
     setSearchTerm("");
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(CARS_SEARCH_PARAMS.search);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex items-center gap-2 mb-6">
+    <form
+      onSubmit={handleSearch}
+      className="flex items-center flex-3/4 gap-2 mb-6"
+    >
       <div className="relative flex-1">
         <label htmlFor="search" className="sr-only">
           Rechercher une voiture
@@ -74,7 +75,9 @@ export default function SearchBar() {
         )}
       </div>
 
-      <Button type="submit">Rechercher</Button>
+      <Button type="submit" variant="secondary">
+        Rechercher
+      </Button>
     </form>
   );
 }
