@@ -18,7 +18,7 @@ const CarImageWithPricing = ({ car }: CarImageWithPricingProps) => {
     <section>
       <figure className="aspect-8/7 overflow-hidden rounded-lg">
         <Image
-          src="/default-car.jpg"
+          src={`https://picsum.photos/seed/${car.id}/400/400.webp?random=${car.id}`}
           alt={`Voiture ${car.brand} ${car.model}`}
           className="w-full h-full object-cover"
           priority
