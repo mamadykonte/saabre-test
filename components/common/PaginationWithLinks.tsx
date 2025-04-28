@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import Spinner from "@/components/common/Spinner"; 
 
 export interface PaginationWithLinksProps {
   pageSizeSelectOptions?: {
@@ -44,6 +46,8 @@ export function PaginationWithLinks({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [isNavigating, setIsNavigating] = useState(false);
+
   const totalPageCount = Math.ceil(totalCount / pageSize);
 
   const buildLink = useCallback(
@@ -59,13 +63,40 @@ export function PaginationWithLinks({
 
   const navToPageSize = useCallback(
     (newPageSize: number) => {
-      const key = pageSizeSelectOptions?.pageSizeSearchParam || "pageSize";
+      setIsNavigating(true);
+
+      const pageKey = pageSearchParam || "page";
+      const pageSizeKey =
+        pageSizeSelectOptions?.pageSizeSearchParam || "pageSize";
+
       const newSearchParams = new URLSearchParams(searchParams || undefined);
-      newSearchParams.set(key, String(newPageSize));
-      router.push(`${pathname}?${newSearchParams.toString()}`);
+
+      const currentPage = Number(searchParams?.get(pageKey) || 1);
+      const currentPageSize = Number(
+        searchParams?.get(pageSizeKey) || pageSize
+      );
+
+      const offset = (currentPage - 1) * currentPageSize;
+      const newPage = Math.floor(offset / newPageSize) + 1;
+
+      newSearchParams.set(pageSizeKey, String(newPageSize));
+      newSearchParams.set(pageKey, String(newPage));
+
+      router.replace(`${pathname}?${newSearchParams.toString()}`);
     },
-    [searchParams, pathname, pageSizeSelectOptions?.pageSizeSearchParam, router]
+    [
+      searchParams,
+      pathname,
+      pageSize,
+      pageSearchParam,
+      pageSizeSelectOptions?.pageSizeSearchParam,
+      router,
+    ]
   );
+
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [searchParams]);
 
   const renderPageNumbers = () => {
     const items: ReactNode[] = [];
@@ -155,7 +186,9 @@ export function PaginationWithLinks({
               className={
                 page === 1 ? "pointer-events-none opacity-50" : undefined
               }
-            />
+            >
+              {isNavigating ? <Spinner size={16} /> : "Précédent"}
+            </PaginationPrevious>
           </PaginationItem>
           {renderPageNumbers()}
           <PaginationItem>
@@ -168,7 +201,9 @@ export function PaginationWithLinks({
                   ? "pointer-events-none opacity-50"
                   : undefined
               }
-            />
+            >
+              {isNavigating ? <Spinner size={16} /> : "Suivant"}
+            </PaginationNext>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
@@ -187,7 +222,9 @@ function SelectRowsPerPage({
 }) {
   return (
     <div className="flex items-center gap-4">
-      <label htmlFor="page-size-select" className="w-max text-sm font-medium">Taille de page</label>
+      <label htmlFor="page-size-select" className="w-max text-sm font-medium">
+        Taille de page
+      </label>
 
       <Select
         value={String(pageSize)}
