@@ -6,6 +6,7 @@ import { carRepository } from "@/features/cars/repositories/carRepository";
 
 import { CarCard } from "@/features/cars/components/CarCard";
 import { PaginationWithLinks } from "@/components/common/PaginationWithLinks";
+import SearchBar from "@/components/common/SearchBar";
 
 export const metadata: Metadata = {
   title: "Liste des voitures - Saabre",
@@ -27,29 +28,48 @@ interface HomeProps {
 }
 
 const Home = async ({ searchParams }: HomeProps) => {
-  const { page, pageSize } = await searchParams;
-  const currentPage = parseInt(page ?? "1") || 1;
-  const postsPerPage =
-    parseInt(pageSize ?? `${CARS_PER_PAGE}`) || CARS_PER_PAGE;
+  const {
+    page: rawPage,
+    pageSize: rawPageSize,
+    search: rawSearch,
+  } = await searchParams;
 
-  const { cars, totalPages } = await carRepository.fetchAll(
-    currentPage,
-    postsPerPage
-  );
+  const page = parseInt(rawPage ?? "1", 10) || 1;
+  const pageSize =
+    parseInt(rawPageSize ?? `${CARS_PER_PAGE}`, 10) || CARS_PER_PAGE;
+  const search = rawSearch?.toLowerCase().trim() || "";
+
+  const { cars, totalPages } = await carRepository.fetchAll(page, pageSize);
+
+  const visibleCars = search
+    ? cars.filter((car: Car) => {
+        const brand = car.brand.toLowerCase();
+        const model = car.model.toLowerCase();
+        return brand.includes(search) || model.includes(search);
+      })
+    : cars;
+
+  const effectiveTotalCount = search ? visibleCars.length : totalPages;
 
   return (
     <main className="custom-container grid gap-6">
-      <section
-        aria-label="Liste des voitures"
-        className="flex flex-col gap-6 w-full max-w-5xl mx-auto"
-      >
-        {cars.map((car: Car) => (
-          <CarCard key={car.id} car={car} />
-        ))}
+      <section className="flex flex-col gap-6 w-full max-w-5xl mx-auto">
+        <SearchBar />
+
+        {visibleCars.length === 0 ? (
+          <p className="text-center text-gray-500">Aucune voiture trouvée.</p>
+        ) : (
+          <>
+            {visibleCars.map((car: Car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </>
+        )}
+
         <PaginationWithLinks
-          page={currentPage}
-          pageSize={postsPerPage}
-          totalCount={totalPages}
+          page={page}
+          pageSize={pageSize}
+          totalCount={effectiveTotalCount}
           pageSizeSelectOptions={{
             pageSizeOptions: CARS_PAGE_SIZE_OPTIONS,
           }}
