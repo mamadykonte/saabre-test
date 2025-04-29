@@ -1,30 +1,46 @@
-# 🚗 Saabre - Test Frontend Developer
+# 🚗 Saabre - Frontend Test
 
-Bienvenue sur mon projet de test technique pour Saabre.
-Ce projet est un MVP d'un catalogue interactif de véhicules électrifiés (voitures électriques, hybrides...).
+Projet frontend réalisé avec **Next.js 15**, **TypeScript**, **Tailwind CSS**, et **Shadcn UI** dans le cadre d’un test technique pour afficher une liste de voitures avec pagination, recherche, tri, et filtrage.
 
-## 📦 Stack technique
-- **Next.js 15** (App Router)
-- **React 19** (Server Components + Client Components)
-- **TypeScript**
-- **TailwindCSS**
-- **Shadcn UI**
-- **ESLint** et **Prettier**
-- **Vercel** pour le déploiement
+Live demo: [https://saabre-cars.vercel.app](https://saabre-cars.vercel.app)
 
-## ✨ Fonctionnalités réalisées
+---
 
-- Affichage d'une liste paginée des véhicules
-- Système de pagination dynamique avec `page` et `pageSize`
-- Page de détail pour chaque véhicule (`/cars/[carId]`)
-- Gestion des erreurs (`error.tsx`) et chargements (`loading.tsx`)
-- Architecture modulaire : **features-based**
-- Respect des bonnes pratiques SEO (meta tags, OpenGraph, titres dynamiques)
-- Accessibilité améliorée : balises HTML sémantiques, aria-labels, alt-texts
-- UX fluide : Skeletons de chargement, spinners, scroll-to-top automatique
-- Déploiement sur Vercel
+## 📦 Fonctionnalités principales
 
-## 🚀 Lancer le projet en local
+- 🔍 Recherche de voitures par marque ou modèle
+- 🧮 Tri par prix (croissant / décroissant)
+- ⚡ Filtrage par source d’énergie (Hybride / Électrique / Autres)
+- 🔁 Pagination avec sélection du nombre d’éléments par page
+- 🔄 Réinitialisation rapide des filtres
+- 🌐 Métadonnées SEO et Open Graph
+- 🧠 Architecture modulaire (feature-based)
+- 📱 Responsive et accessible
+
+---
+
+## 🧱 Structure du projet
+
+```
+├── app/                     # Routes Next.js (App Router)
+│   ├── (home)/             # Page d’accueil avec filtres et pagination
+│   └── cars/[carId]/       # Détail d’un véhicule
+├── features/cars/          # Domaine métier voiture
+│   ├── api/                # Fonctions d’appel API
+│   ├── components/         # Composants spécifiques au domaine
+│   ├── lib/                # Logique métier (tri, filtre, etc.)
+│   ├── repositories/       # Abstraction des appels API
+│   └── types/              # Types TypeScript du domaine
+├── components/ui/          # UI de base (Shadcn UI)
+├── components/common/      # Composants réutilisables (search, tri, pagination...)
+├── shared/                 # Fonctions / constantes génériques et cross-domain
+├── public/                 # Images statiques (voitures par défaut)
+├── lib/                    # API client générique, helpers
+```
+
+---
+
+## ⚙️ Installation
 
 1. Cloner le repository
 ```bash
@@ -41,7 +57,8 @@ ou
 pnpm install
 ```
 
-3. Ajouter un fichier `.env.local`
+3. Renommer le fichier `.env.local.example` en `.env.local` et ajouter base url de l'API
+
 ```bash
 NEXT_PUBLIC_API_URL=https://api.example.com
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
@@ -52,32 +69,24 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 npm run dev
 ```
 
-## 👨‍💻 Structure du projet
+---
 
-```
-├── app/ (routing Next.js)
-├── features/ (logique métier des voitures)
-├── components/ui/ (UI génériques : boutons, select...)
-├── components/common/ (Pagination, Spinner, etc.)
-├── lib/ (utils et hooks)
-├── public/ (images statiques)
-├── shared/ (formatters, constantes)
-├── tsconfig.json, eslint.config.mjs (configurations)
-```
+## 🛠 Technologies utilisées
 
-## 📘 Sources utilisées
-- [Next.js 15 documentation](https://nextjs.org/docs)
-- [TailwindCSS documentation](https://tailwindcss.com/docs)
-- [Shadcn UI documentation](https://ui.shadcn.dev/)
-
-## 📜 Respect des consignes Saabre
-
-- HTML optimisé et accessibilité
-- Responsive design adapté à tous les écrans
-- Code clair, composantisé et réutilisable
-- Bonne performance et expérience utilisateur
-- Projet scalable, facilement évolutif et mantenable
+- [Next.js 15](https://nextjs.org/)
+- [React Server Components](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Picsum API](https://picsum.photos/) (images)
 
 ---
 
-Merci beaucoup pour votre attention et votre évaluation ! 🚀
+## 🧪 À faire pour aller plus loin
+
+- Permettre la comparaison de voitures (mini comparateur)
+- Stocker les filtres dans l’URL de manière persistante
+- Ajouter un système de favoris
+- Ajouter des tests unitaires (Jest / Vitest)
+- Mettre en place des vraies images de voitures
+- Ajouter des animation
