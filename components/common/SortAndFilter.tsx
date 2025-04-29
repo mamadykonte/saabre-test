@@ -52,51 +52,52 @@ export default function SortAndFilter() {
   const isFilterActive = search || sort || energy;
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
+    <div className="flex flex-col md:flex-row gap-2">
       {/* Tri par prix */}
-      <div className="flex flex-col gap-1">
-        <Select
-          value={sort}
-          onValueChange={(value) =>
-            updateSearchParam(CARS_SEARCH_PARAMS.sort, value)
-          }
-        >
-          <SelectTrigger aria-label="Trier par prix">
-            <SelectValue placeholder="Trier" />
-          </SelectTrigger>
-          <SelectContent>
-            {CARS_SORT_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+
+      <Select
+        value={sort}
+        onValueChange={(value) =>
+          updateSearchParam(CARS_SEARCH_PARAMS.sort, value)
+        }
+      >
+        <SelectTrigger aria-label="Trier par prix" className="flex-1 w-full">
+          <SelectValue placeholder="Trier" />
+        </SelectTrigger>
+        <SelectContent>
+          {CARS_SORT_OPTIONS.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {/* Filtrer par énergie */}
-      <div className="flex flex-col gap-1">
-        <Select
-          value={energy || CARS_ENERGY_OPTIONS[0].value}
-          onValueChange={(value) =>
-            updateSearchParam(
-              CARS_SEARCH_PARAMS.energy,
-              value === CARS_ENERGY_OPTIONS[0].value ? "" : value
-            )
-          }
+
+      <Select
+        value={energy || CARS_ENERGY_OPTIONS[0].value}
+        onValueChange={(value) =>
+          updateSearchParam(
+            CARS_SEARCH_PARAMS.energy,
+            value === CARS_ENERGY_OPTIONS[0].value ? "" : value
+          )
+        }
+      >
+        <SelectTrigger
+          aria-label="Filtrer par source d'énergie"
+          className="flex-1 w-full"
         >
-          <SelectTrigger aria-label="Filtrer par source d'énergie">
-            <SelectValue placeholder="Toutes" />
-          </SelectTrigger>
-          <SelectContent>
-            {CARS_ENERGY_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+          <SelectValue placeholder="Toutes" />
+        </SelectTrigger>
+        <SelectContent>
+          {CARS_ENERGY_OPTIONS.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {/* Bouton Reset */}
       <Button
@@ -104,7 +105,7 @@ export default function SortAndFilter() {
         onClick={resetFilters}
         disabled={!isFilterActive}
         variant="outline"
-        className="w-full md:w-auto"
+        className="flex-1"
       >
         Réinitialiser les filtres
       </Button>

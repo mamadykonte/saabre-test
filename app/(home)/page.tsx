@@ -58,10 +58,10 @@ const Home = async ({ searchParams }: HomeProps) => {
     search || energy || sort ? visibleCars.length : totalPages;
 
   return (
-    <div className="custom-container max-w-5xl flex flex-col gap-6">
-      <header>
-        <h1 className="text-3xl font-bold mb-4">Liste des voitures</h1>
-        <div className="flex flex-col md:flex-row gap-6">
+    <div className="custom-container max-w-5xl flex flex-col gap-8">
+      <header className="flex flex-col gap-6">
+        <h1 className="text-3xl font-bold">Liste des voitures</h1>
+        <div className="flex flex-col md:flex-row gap-2 md:gap-8">
           <SearchBar />
           <SortAndFilter />
         </div>

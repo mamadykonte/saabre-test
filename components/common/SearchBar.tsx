@@ -46,7 +46,7 @@ export default function SearchBar() {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center flex-3/4 gap-2 mb-6"
+      className="flex items-center flex-3/4 gap-2"
     >
       <div className="relative flex-1">
         <label htmlFor="search" className="sr-only">
