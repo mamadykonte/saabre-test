@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Liste des voitures - Saabre",
     description:
       "Explorez notre collection de voitures modernes et performantes.",
-    url: "https://tonsite.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "localhost:3000",
     siteName: "Saabre",
     locale: "fr_FR",
     type: "website",
@@ -50,12 +50,17 @@ const Home = async ({ searchParams }: HomeProps) => {
   const energy = rawEnergy?.trim().toLowerCase() || "";
   const sort = rawSort || "";
 
-  const { cars, totalPages } = await carRepository.fetchAll(page, pageSize);
-
-  const visibleCars = getVisibleCars({ cars, search, energy, sort });
-
-  const effectiveTotalCount =
-    search || energy || sort ? visibleCars.length : totalPages;
+  
+  const allCars = await carRepository.fetchAll();
+  
+  const visibleCars = getVisibleCars({ cars: allCars, search, energy, sort });
+  
+  // Pagination manuelle après filtrage
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedCars = visibleCars.slice(startIndex, endIndex);
+  
+  const effectiveTotalCount = visibleCars.length;
 
   return (
     <div className="custom-container max-w-5xl flex flex-col gap-8">
@@ -69,11 +74,14 @@ const Home = async ({ searchParams }: HomeProps) => {
 
       <main className="grid gap-6">
         <section className="flex flex-col gap-6 w-full">
-          {visibleCars.length === 0 ? (
+          {paginatedCars.length === 0 ? (
             <p className="text-center text-gray-500">Aucune voiture trouvée.</p>
           ) : (
-            visibleCars.map((car) => <CarCard key={car.id} car={car} />)
-          )}
+            <> <p className="text-gray-700 text-center">
+            {effectiveTotalCount} voiture{effectiveTotalCount > 1 ? "s" : ""} trouvée{effectiveTotalCount > 1 ? "s" : ""}
+          </p>
+            {paginatedCars.map((car) => <CarCard key={car.id} car={car} />)}
+          </>)}
 
           <PaginationWithLinks
             page={page}
